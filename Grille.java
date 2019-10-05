@@ -1,4 +1,4 @@
-package grille;
+package org.algodev.grille;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -18,6 +18,12 @@ public class Grille {
         this.grille = new ArrayList<ArrayList<Case>>();
     }
 
+    /**
+     * Créer la grille en fonction des valeurs passés en paramètre
+     * @param ligne nombre de lignes
+     * @param col nombre de colonnes
+     */
+
     public Grille(int ligne, int col) {
         this.grille = new ArrayList<ArrayList<Case>>();
         for(int i = 0; i < ligne; i++) {
@@ -28,44 +34,29 @@ public class Grille {
         }
     }
 
+    /**
+     * Affiche la grille, c'est une méthode de test, ne pas utiliser dans le projet final
+     */
+
     public void affiche() {
-        int i = 1, j = 1;
         for (ArrayList<Case> cases : grille) {
             for (Case valeur : cases) {
                 System.out.print(valeur.toString() + " ");
-                if(i == 3) {
-                    i = 0;
-                    //System.out.print(" ");
-                }
-                i++;
             }
             System.out.println();
-            if(j == 3) {
-                j = 0;
-                //System.out.println();
-            }
-            j++;
         }
     }
+
+    /**
+     * Permet de décomposer un string. Chaque caractère doit être séparer d'un esapace pour fonctionner
+     * @param valeurs Une chaine de caractères
+     */
 
     public void remplirGrille(String valeurs) {
-        StringTokenizer line = new StringTokenizer(valeurs);
+        StringTokenizer tokens = new StringTokenizer(valeurs);
         for(ArrayList<Case> cases : grille)  {
             for(Case valeur : cases) {
-                valeur.setValeur(line.nextToken());
-            }
-        }
-    }
-
-    public void remplirGrilleSudoku(String valeurs) {
-        StringTokenizer line = new StringTokenizer(valeurs);
-        String c;
-        for (ArrayList<Case> cases : grille) {
-            for (Case valeur : cases) {
-                c = line.nextToken();
-                if (Integer.parseInt(c) < 10 && Integer.parseInt(c) > 0)
-                    valeur.setModifiable();
-                valeur.setValeur(c);
+                valeur.setValeur(tokens.nextToken());
             }
         }
     }
