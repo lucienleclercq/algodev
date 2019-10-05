@@ -1,12 +1,13 @@
 package grille;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Grille {
     protected ArrayList<ArrayList<Case>> grille;
 
-    public ArrayList<ArrayList<Case>> getGrille() {
-        return grille;
+    public Grille getGrille() {
+        return this;
     }
 
     public Case getCase(int i, int j){
@@ -28,11 +29,44 @@ public class Grille {
     }
 
     public void affiche() {
+        int i = 1, j = 1;
         for (ArrayList<Case> cases : grille) {
             for (Case valeur : cases) {
                 System.out.print(valeur.toString() + " ");
+                if(i == 3) {
+                    i = 0;
+                    //System.out.print(" ");
+                }
+                i++;
             }
             System.out.println();
+            if(j == 3) {
+                j = 0;
+                //System.out.println();
+            }
+            j++;
+        }
+    }
+
+    public void remplirGrille(String valeurs) {
+        StringTokenizer line = new StringTokenizer(valeurs);
+        for(ArrayList<Case> cases : grille)  {
+            for(Case valeur : cases) {
+                valeur.setValeur(line.nextToken());
+            }
+        }
+    }
+
+    public void remplirGrilleSudoku(String valeurs) {
+        StringTokenizer line = new StringTokenizer(valeurs);
+        String c;
+        for (ArrayList<Case> cases : grille) {
+            for (Case valeur : cases) {
+                c = line.nextToken();
+                if (Integer.parseInt(c) < 10 && Integer.parseInt(c) > 0)
+                    valeur.setModifiable();
+                valeur.setValeur(c);
+            }
         }
     }
 }
