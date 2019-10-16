@@ -14,7 +14,7 @@ public class Grille {
     }
     
     /**
-     * CrÃ©er la grille en fonction des valeurs passÃ©s en paramÃ¨tre
+     * Creer la grille en fonction des valeurs passes en parametres
      * @param ligne nombre de lignes
      * @param col nombre de colonnes
      */
@@ -43,10 +43,6 @@ public class Grille {
                 this.grille.add(new ArrayList<Case>());
                 for (int j = 0; j < col; j++) {
                     this.grille.get(i).add(new CaseSudoku());
-                    CaseSudoku casesudoku = (CaseSudoku) this.getCase(i, j);
-                    if (!(casesudoku.toString().equals("0"))) {
-                    	casesudoku.modifiableToFalse();
-                    }
                 }
             }
     	}
@@ -62,8 +58,8 @@ public class Grille {
     	}
     }
     
-    public ArrayList<ArrayList<Case>> getGrille() {
-        return this.grille;
+    public Grille getGrille() {
+        return this;
     }
 
     public Case getCase(int i, int j){
@@ -71,10 +67,10 @@ public class Grille {
     }
     
     /**
-     * Met directement une case à des coordonnées données
-     * @param i Coordonnée de la ligne
-     * @param j Coordonnée de la colonne
-     * @param c	Case à ajouter aux coordonnées
+     * Met directement une case a des coordonnees donnees
+     * @param i Coordonnee de la ligne
+     * @param j Coordonnee de la colonne
+     * @param c	Case a ajouter aux coordonnees
      */
     
     public void setCase(int i, int j, Case c) {
@@ -82,7 +78,7 @@ public class Grille {
     }
 
     /**
-     * Affiche la grille, c'est une mÃ©thode de test, ne pas utiliser dans le projet final
+     * Affiche la grille, c'est une methode de test, ne pas utiliser dans le projet final
      */
 
     public void affiche() {
@@ -95,7 +91,7 @@ public class Grille {
     }
 
     /**
-     * Permet de dÃ©composer un string. Chaque caractÃ¨re doit Ãªtre sÃ©parer d'un esapace pour fonctionner
+     * Permet de decomposer un string. Chaque caractere doit etre separer d'un esapace pour fonctionner
      * @param valeurs Une chaine de caractÃ¨res
      */
 
@@ -104,9 +100,21 @@ public class Grille {
         for(ArrayList<Case> cases : grille)  {
             for(Case valeur : cases) {
                 valeur.setValeur(tokens.nextToken());
+                if(valeur instanceof CaseSudoku) {
+                    CaseSudoku casesudo = (CaseSudoku) valeur;
+                    if(!casesudo.valeur.equals("0")) {
+                        casesudo.modifiableToFalse();
+                    }
+                    System.out.println(casesudo.getModifiable());
+                }
             }
         }
     }
+
+    /**
+     * Demande a l'utilisateur de rentrer des coordonees
+     * @return ArrayList, indice 0 = x, indice 1 = y
+     */
     
     public ArrayList<Integer> coordonneesUtilisateur() {
     	Scanner scanner = new Scanner(System.in);
@@ -115,14 +123,19 @@ public class Grille {
     	listecoordonnees.add(scanner.nextInt()-1);
     	System.out.println("ENTRER COORDONNEE Y : ");
     	listecoordonnees.add(scanner.nextInt()-1);
-    	scanner.close();
     	return listecoordonnees;
     }
+
+    /**
+     * Verifie si l'utilisateur n'a pas entre des coordonnees innaccessibles (hors liste)
+     * @param listecoordonnees ArrayList des coordonees x et y
+     * @return true si les coordonnees sont correctes
+     */
     
     public Boolean coordonneesCorrectes(ArrayList<Integer> listecoordonnees) {
-    	int x = listecoordonnees.get(0);
-    	int y = listecoordonnees.get(1);
-    	if(x <= this.grille.size() && y <= this.grille.get(0).size() && x >= 0 && y >= 0) {
+    	int x = listecoordonnees.get(1);
+    	int y = listecoordonnees.get(0);
+    	if(y <= this.grille.size() && x <= this.grille.get(0).size() && x >= 0 && y >= 0) {
     		return true;
     	}
     	return false;
