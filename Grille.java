@@ -14,7 +14,7 @@ public class Grille {
     }
     
     /**
-     * Créer la grille en fonction des valeurs passés en paramètre
+     * CrÃ©er la grille en fonction des valeurs passÃ©s en paramÃ¨tre
      * @param ligne nombre de lignes
      * @param col nombre de colonnes
      */
@@ -62,8 +62,8 @@ public class Grille {
     	}
     }
     
-    public Grille getGrille() {
-        return this;
+    public ArrayList<ArrayList<Case>> getGrille() {
+        return this.grive;
     }
 
     public Case getCase(int i, int j){
@@ -71,10 +71,10 @@ public class Grille {
     }
     
     /**
-     * Met directement une case � des coordonn�es donn�es
-     * @param i Coordonn�e de la ligne
-     * @param j Coordonn�e de la colonne
-     * @param c	Case � ajouter aux coordonn�es
+     * Met directement une case à des coordonnées données
+     * @param i Coordonnée de la ligne
+     * @param j Coordonnée de la colonne
+     * @param c	Case à ajouter aux coordonnées
      */
     
     public void setCase(int i, int j, Case c) {
@@ -82,7 +82,7 @@ public class Grille {
     }
 
     /**
-     * Affiche la grille, c'est une méthode de test, ne pas utiliser dans le projet final
+     * Affiche la grille, c'est une mÃ©thode de test, ne pas utiliser dans le projet final
      */
 
     public void affiche() {
@@ -95,8 +95,8 @@ public class Grille {
     }
 
     /**
-     * Permet de décomposer un string. Chaque caractère doit être séparer d'un esapace pour fonctionner
-     * @param valeurs Une chaine de caractères
+     * Permet de dÃ©composer un string. Chaque caractÃ¨re doit Ãªtre sÃ©parer d'un esapace pour fonctionner
+     * @param valeurs Une chaine de caractÃ¨res
      */
 
     public void remplirGrille(String valeurs) {
