@@ -63,7 +63,7 @@ public class Grille {
     }
     
     public ArrayList<ArrayList<Case>> getGrille() {
-        return this.grive;
+        return this.grille;
     }
 
     public Case getCase(int i, int j){
