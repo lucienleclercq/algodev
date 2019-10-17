@@ -51,7 +51,7 @@ public class Grille {
     			for(int i = 0; i < ligne; i++) {
                     this.grille.add(new ArrayList<Case>());
                     for (int j = 0; j < col; j++) {
-                        //this.grille.get(i).add(new CaseLoto());
+                        this.grille.get(i).add(new CaseLoto());
                     }
                 }
     		}
