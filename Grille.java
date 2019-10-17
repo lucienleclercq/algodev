@@ -92,7 +92,7 @@ public class Grille {
 
     /**
      * Permet de decomposer un string. Chaque caractere doit etre separer d'un esapace pour fonctionner
-     * @param valeurs Une chaine de caractÃ¨res
+     * @param valeurs Une chaine de caracteres
      */
 
     public void remplirGrille(String valeurs) {
