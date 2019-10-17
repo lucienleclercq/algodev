@@ -58,8 +58,8 @@ public class Grille {
     	}
     }
     
-    public Grille getGrille() {
-        return this;
+ public ArrayList<ArrayList<Case>> getGrille() {
+        return this.grille;
     }
 
     public Case getCase(int i, int j){
@@ -139,5 +139,16 @@ public class Grille {
     		return true;
     	}
     	return false;
+    }
+        public void agrandir(int ligne, int col)
+    {
+        int fin = grille.size();
+        for(int i = grille.size(); i < ligne+fin;i++)
+        {
+            this.grille.add(new ArrayList<Case>());
+            for (int j = 0; j < col; j++) {
+                this.grille.get(i).add(new CaseLoto());
+            }
+        }
     }
 }
