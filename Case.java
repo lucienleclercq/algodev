@@ -9,9 +9,15 @@ public class Case {
     public Case() {
         valeur = "vide";
     }
-
+    public Case(String valeur) {
+        this.valeur = valeur;
+    }
     public void setValeur(String valeur) {
         this.valeur = valeur;
+    }
+    public String getValeur()
+    {
+        return valeur;
     }
 
     @Override
