@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import org.algodev.Navale.CaseNavale;
+import org.algodev.loto.CaseLoto;
 import org.algodev.sudoku.CaseSudoku;
 
 public class Grille {
     protected ArrayList<ArrayList<Case>> grille;
-    
+
     public Grille() {
         this.grille = new ArrayList<ArrayList<Case>>();
     }
@@ -46,19 +48,25 @@ public class Grille {
                 }
             }
     	}
-    	else {
-    		if (jeu.equals("Loto")) {
-    			for(int i = 0; i < ligne; i++) {
-                    this.grille.add(new ArrayList<Case>());
-                    for (int j = 0; j < col; j++) {
-                        this.grille.get(i).add(new CaseLoto());
-                    }
+    	else if (jeu.equals("Loto")) {
+            for (int i = 0; i < ligne; i++) {
+                this.grille.add(new ArrayList<Case>());
+                for (int j = 0; j < col; j++) {
+                    this.grille.get(i).add(new CaseLoto());
                 }
-    		}
-    	}
+            }
+        }
+        else if (jeu.equals("Bataille Navale")) {
+            for (int i = 0; i < ligne; i++) {
+                this.grille.add(new ArrayList<Case>());
+                for (int j = 0; j < col; j++) {
+                    this.grille.get(i).add(new CaseNavale());
+                }
+            }
+        }
     }
-    
- public ArrayList<ArrayList<Case>> getGrille() {
+
+    public ArrayList<ArrayList<Case>> getGrille() {
         return this.grille;
     }
 
@@ -92,7 +100,7 @@ public class Grille {
 
     /**
      * Permet de decomposer un string. Chaque caractere doit etre separer d'un esapace pour fonctionner
-     * @param valeurs Une chaine de caracteres
+     * @param valeurs Une chaine de caractÃ¨res
      */
 
     public void remplirGrille(String valeurs) {
@@ -105,7 +113,6 @@ public class Grille {
                     if(!casesudo.valeur.equals("0")) {
                         casesudo.modifiableToFalse();
                     }
-                    System.out.println(casesudo.getModifiable());
                 }
             }
         }
@@ -140,7 +147,8 @@ public class Grille {
     	}
     	return false;
     }
-        public void agrandir(int ligne, int col)
+
+    public void agrandir(int ligne, int col)
     {
         int fin = grille.size();
         for(int i = grille.size(); i < ligne+fin;i++)
