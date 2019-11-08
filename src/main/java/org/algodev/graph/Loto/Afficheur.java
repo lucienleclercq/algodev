@@ -20,7 +20,7 @@ public class Afficheur {
         t.setY(y+r*10);
         t.setX(x+r*6);
         t.setFont(new Font(60));
-        t.setText(new Integer(n).toString());
+        t.setText(Integer.toString(n));
         this.r = new Rectangle(w,w, Color.web("0xC4C4C4", 1));
         this.r.setY(y);
         this.r.setX(x);
@@ -40,7 +40,7 @@ public class Afficheur {
     }
     public void setnombre(int n)//change le nombre a afficher
     {
-        this.t.setText(new Integer(n).toString());
+        this.t.setText(Integer.toString(n));
     }
     public Group getG()
     {
