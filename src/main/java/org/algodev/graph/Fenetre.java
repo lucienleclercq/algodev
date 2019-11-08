@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class Fenetre {
@@ -32,17 +33,16 @@ public class Fenetre {
     private int tailleh;
     private int taillew;
     private int jeux; // 0 rien 1 loto 3 sudo
-    public Fenetre(Stage s1) throws FileNotFoundException {
+    public Fenetre(Stage s1) throws IOException {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();// recuperation de la taille de l'ecran de l'utilisateur
         tailleh = (int)dimension.getHeight();
         taillew  = (int)dimension.getWidth();
         root = new Group();//creation du groupe qui va garder tous les objet a afficher
+        scene = new Scene(root,taillew, tailleh,  Color.grayRgb(50)); //instanciation de la fenetre
         loto = new Group(new LotoInterface(tailleh,taillew).getLoto());//groupe qui garder les objet du loto
-        sudo = new Group(new InterfaceSudo(tailleh, taillew).getSudo());//groupe qui garder les objet du sudoku
+        sudo = new Group(new InterfaceSudo(tailleh, taillew, scene).getSudo());//groupe qui garder les objet du sudoku
         this.s1 = s1;//on garde le stage dans une variable de la classe
         this.s1.setFullScreen(true);//on met le plein ecran
-
-        scene = new Scene(root,taillew, tailleh,  Color.grayRgb(50)); //instanciation de la fenetre
         this.s1.setScene(scene);
         this.s1.show();//on montre la fenetre
         jeux = 0;//represente le jeut en cour
@@ -51,14 +51,14 @@ public class Fenetre {
     private void creeMenu() throws FileNotFoundException {
 
         //FileInputStream inputstream = new FileInputStream(".\\src\\graph\\IMG_0114.jpg");
-        Image image = new Image(String.valueOf(this.getClass().getResource("/IMG_0114.jpg")));//recuperation de l'image
-        ImageView im = new ImageView(image);//enregistrement de l'image
-        im.setX(0);//positionnement de l'image
-        im.setY(0);
-        im.setPreserveRatio(false);
-        im.setFitHeight(tailleh);//definition de la taille de l'image
-        im.setFitWidth(taillew);
-        root.getChildren().add(im);//on affiche l'image en la mettant dans le groupe
+        //Image image = new Image(String.valueOf(this.getClass().getResource("/IMG_0114.jpg")));//recuperation de l'image
+        //ImageView im = new ImageView(image);//enregistrement de l'image
+        //im.setX(0);//positionnement de l'image
+        //im.setY(0);
+        //im.setPreserveRatio(false);
+        //im.setFitHeight(tailleh);//definition de la taille de l'image
+        //im.setFitWidth(taillew);
+        //root.getChildren().add(im);//on affiche l'image en la mettant dans le groupe
         Rectangle barreMenu = new Rectangle(taillew*0.076,tailleh);//on cree un rectangle pour faire le fond de menu a gauche
         DropShadow o = new DropShadow();//creation d'une ombre pour barreMenu
         o.setOffsetX(taillew*0.005);//declaration du decalage de l'ombre

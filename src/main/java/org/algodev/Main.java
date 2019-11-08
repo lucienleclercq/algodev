@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends Application {
     Fenetre f1;
@@ -15,7 +16,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage s1) throws FileNotFoundException {
+    public void start(Stage s1) throws IOException {
         s1.setTitle("jeux");
         f1 = new Fenetre(s1);
     }

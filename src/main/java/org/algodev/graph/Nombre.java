@@ -33,7 +33,7 @@ public class Nombre {//cree un nombre dans un rectangle encadré
         g.getChildren().add(t);
 
     }
-    public void setcouleur(Paint g)
+    public void setCouleur(Paint g)
     {
         r.setFill(g);
     }
@@ -44,5 +44,20 @@ public class Nombre {//cree un nombre dans un rectangle encadré
     public Group getG()
     {
         return g;
+    }
+
+    public Text getText() {
+        return t;
+    }
+
+    public Rectangle getRectangle() {
+        return r;
+    }
+
+    public void setText(String nombre) {
+        if(nombre.equals("0")) {
+            t.setText("");
+        }
+        else t.setText(nombre);
     }
 }

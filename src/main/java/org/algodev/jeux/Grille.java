@@ -1,6 +1,7 @@
 package org.algodev.jeux;
 
 import org.algodev.jeux.loto.CaseLoto;
+import org.algodev.jeux.sudoku.CaseSudoku;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -39,16 +40,12 @@ public class Grille {
     public Grille(int ligne, int col, String jeu) {
         this.grille = new ArrayList<ArrayList<Case>>();
         if(jeu.equals("Sudoku")) {
-            /*for(int i = 0; i < ligne; i++) {
+            for(int i = 0; i < ligne; i++) {
                 this.grille.add(new ArrayList<Case>());
                 for (int j = 0; j < col; j++) {
                     this.grille.get(i).add(new CaseSudoku());
-                    CaseSudoku casesudoku = (CaseSudoku) this.getCase(i, j);
-                    if (!(casesudoku.toString().equals("0"))) {
-                        casesudoku.modifiableToFalse();
-                    }
                 }
-            }*/
+            }
         }
         else {
             if (jeu.equals("Loto")) {
@@ -114,7 +111,12 @@ public class Grille {
         StringTokenizer tokens = new StringTokenizer(valeurs);
         for(ArrayList<Case> cases : grille)  {
             for(Case valeur : cases) {
-                valeur.setValeur(tokens.nextToken());
+                String nombre = tokens.nextToken();
+                if(!nombre.equals("0")) {
+                    CaseSudoku casesudo = (CaseSudoku) valeur;
+                    casesudo.modifiableToFalse();
+                }
+                valeur.setValeur(nombre);
             }
         }
     }

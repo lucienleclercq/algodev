@@ -66,13 +66,13 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
     {
         for(Nombre n : nombre)
         {
-            n.setcouleur(Color.web("0xC4C4C4", 1));
+            n.setCouleur(Color.web("0xC4C4C4", 1));
         }
         vide();
     }
     public void maj(int nb)//permet de changer l'état d'un nombre
     {
-        if(nb>0)nombre.get(nb-1).setcouleur(Color.web("0xFF2020", 1));
+        if(nb>0)nombre.get(nb-1).setCouleur(Color.web("0xFF2020", 1));
         a.setnombre(nb);
     }
     public boolean gagner(int nb)//affiche gagner
