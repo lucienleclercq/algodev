@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import org.algodev.graph.Loto.LotoInterface;
+import org.algodev.graph.batailleNavale.InterfaceBatailleNaval;
 import org.algodev.graph.sudo.InterfaceSudo;
 
 import javafx.scene.control.Button;
@@ -28,11 +29,12 @@ public class Fenetre {
     private Group root;
     private Group loto;
     private Group sudo;
+    private Group bataille;
     private Scene scene;
     private BackgroundImage Fond;
     private int tailleh;
     private int taillew;
-    private int jeux; // 0 rien 1 loto 3 sudo
+    private int jeux; // 0 rien 1 loto 2 bataille 3 sudo
     public Fenetre(Stage s1) throws IOException {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();// recuperation de la taille de l'ecran de l'utilisateur
         tailleh = (int)dimension.getHeight();
@@ -41,6 +43,7 @@ public class Fenetre {
         scene = new Scene(root,taillew, tailleh,  Color.grayRgb(50)); //instanciation de la fenetre
         loto = new Group(new LotoInterface(tailleh,taillew).getLoto());//groupe qui garder les objet du loto
         sudo = new Group(new InterfaceSudo(tailleh, taillew, scene).getSudo());//groupe qui garder les objet du sudoku
+        bataille = new Group(new InterfaceBatailleNaval(tailleh,taillew).getG());
         this.s1 = s1;//on garde le stage dans une variable de la classe
         this.s1.setFullScreen(true);//on met le plein ecran
         this.s1.setScene(scene);
@@ -83,6 +86,7 @@ public class Fenetre {
                     {
                         root.getChildren().remove(sudo);
                     }
+                    else if(jeux == 2)root.getChildren().remove(bataille);
                     root.getChildren().add(loto);
                     jeux = 1;
                 }
@@ -99,6 +103,18 @@ public class Fenetre {
 
             public void handle(ActionEvent event) {
                 System.out.println("bataille navale");
+                if(jeux != 2)
+                {
+                    if (jeux == 1)
+                    {
+                        root.getChildren().remove(loto);
+                    }
+                    else if(jeux == 3)root.getChildren().remove(sudo);
+
+                    root.getChildren().add(bataille);
+                    jeux = 2;
+                }
+
             }
         });
         Button bsudoku = new Button();
@@ -117,6 +133,8 @@ public class Fenetre {
                     {
                         root.getChildren().remove(loto);
                     }
+                    else if(jeux == 2)root.getChildren().remove(bataille);
+
                     root.getChildren().add(sudo);
                     jeux = 3;
                 }
