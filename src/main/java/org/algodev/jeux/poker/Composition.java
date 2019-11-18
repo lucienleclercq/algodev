@@ -1,4 +1,4 @@
-package poker;
+package org.algodev.jeux.poker;
 
 import java.util.ArrayList;
 import java.util.Collections;

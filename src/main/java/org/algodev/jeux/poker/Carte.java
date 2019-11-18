@@ -1,4 +1,4 @@
-package poker;
+package org.algodev.jeux.poker;
 
 public class Carte implements Comparable<Carte> {
     private int  valeur;

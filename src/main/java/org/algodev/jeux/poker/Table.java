@@ -1,7 +1,4 @@
-package poker;
-
-import poker.Carte;
-import poker.Joueur;
+package org.algodev.jeux.poker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,14 +6,16 @@ import java.util.Collections;
 public class Table {
 
     protected ArrayList<Carte> tapis;
-    protected ArrayList<Joueur> joueurs;
+    protected ArrayList<JoueurPoker> joueurs;
     protected ArrayList<Carte> paquet;
-    int pot;
+    protected int pot;
+    private int misetable; //mise la plus haute de la partie
+    protected int joueursactifs; //reference du joueur qui doit jouer
 
     public Table(){
         pot = 0;
         tapis = new ArrayList<Carte>();
-        joueurs = new ArrayList<Joueur>();
+        joueurs = new ArrayList<JoueurPoker>();
         paquet = new ArrayList<Carte>();
     }
 
@@ -59,7 +58,7 @@ public class Table {
      * Modifier pour ajouter un joueur déja existant a la table
      */
     public void ajoutJoueur(){
-        joueurs.add(new Joueur(200));
+        joueurs.add(new JoueurPoker(200));
     }
 
     /*
@@ -81,7 +80,7 @@ public class Table {
      * Compare le jeux de 2 joueur renvoi le joueur avec le meilleur jeux ou null si leur jeux sont égaux
      * Est utilisé dans la fonction listeGagnant
      */
-    public Joueur compareJoueur (Joueur j1, Joueur j2){
+    public JoueurPoker compareJoueur (JoueurPoker j1, JoueurPoker j2){
         int i = 0;
         ArrayList<Carte> comp1;
         ArrayList<Carte> comp2;
@@ -107,11 +106,11 @@ public class Table {
     /*
      * Permet d'obtenir une liste contenant le ou les joueurs gagnants.
      */
-    public ArrayList<Joueur> listeGagnant(){
-        ArrayList<Joueur> Listejoueur = new ArrayList<>();
-        ArrayList<Joueur> Liste = new ArrayList<>();
-        Joueur best;
-        for (Joueur j : joueurs){
+    public ArrayList<JoueurPoker> listeGagnant(){
+        ArrayList<JoueurPoker> Listejoueur = new ArrayList<>();
+        ArrayList<JoueurPoker> Liste = new ArrayList<>();
+        JoueurPoker best;
+        for (JoueurPoker j : joueurs){
             if (j.isEtat())
                 Listejoueur.add(j);
         }
@@ -132,7 +131,7 @@ public class Table {
             Listejoueur.remove(0);
             Listejoueur.remove(0);
         }
-        for (Joueur j : Listejoueur){
+        for (JoueurPoker j : Listejoueur){
             best = compareJoueur(j, Liste.get(0));
             if (best == null){
                 Liste.add(best);
@@ -152,13 +151,13 @@ public class Table {
     */
     public void lancerPartie(int nbjoueur){
         int i = 0;
-        ArrayList<Joueur> Listegagnant;
+        ArrayList<JoueurPoker> Listegagnant;
         remplirPaquet();
         while (joueurs.size() != nbjoueur){
             ajoutJoueur();
         }
         while (i < nbjoueur){
-            Joueur j;
+            JoueurPoker j;
             j = joueurs.get(i);
             j.clearMain();
             j.setMain(paquet.get(0), paquet.get(1));
@@ -169,7 +168,7 @@ public class Table {
         ajoutCarteTapis(5);
         System.out.println("Le tapis :");
         aff(tapis);
-        for (Joueur j : joueurs) {
+        for (JoueurPoker j : joueurs) {
             System.out.println("Main joueur :");
             aff(j.getMain());
             System.out.println("Meilleur compo :");
@@ -177,8 +176,55 @@ public class Table {
         }
         System.out.println("Les compos gagnantes sont :");
         Listegagnant = listeGagnant();
-        for (Joueur j : Listegagnant) {
+        for (JoueurPoker j : Listegagnant) {
             aff(j.getBestCompo());
         }
     }
+    /*liste des joueurs qui se sont coucher*/
+    public ArrayList<JoueurPoker> getCoucher()
+    {
+        ArrayList<JoueurPoker> joueurcoucher = new ArrayList<JoueurPoker>();
+        for(JoueurPoker j : joueurs)
+        {
+            if(j.getCoucher()) joueurcoucher.add(j);
+        }
+        return joueurcoucher;
+    }
+    /*systeme de mise*/
+    public boolean miser(JoueurPoker joueurs,int valeur)
+    {
+        if(valeur > 0)
+            if(joueurs.getSolde()>=(misetable-joueurs.getMise()))
+            {
+                joueurs.setSolde(joueurs.getSolde()-(misetable-joueurs.getMise()));
+                joueurs.setMise(misetable);
+            return true;
+            }
+        return false;
+    }
+    /*regarde si les mises de chaques joueurs sont égales*/
+    private boolean toutesEgales()
+    {
+        for(JoueurPoker j : joueurs)
+        {
+            if(j.getMise() != misetable) return false;
+        }
+        return true;
+    }
+    /*gere le déroulement de la partie*/
+    private void roulement()
+    {
+        if (!toutesEgales())
+        {
+            if(joueursactifs > joueurs.size()) joueursactifs = 0;
+            else joueursactifs ++;
+        }
+        else
+        {
+            ajoutCarteTapis(1);
+            joueursactifs = 0;
+        }
+    }
+
+
 }
