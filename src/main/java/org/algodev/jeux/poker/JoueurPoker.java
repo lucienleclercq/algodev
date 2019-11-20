@@ -16,6 +16,7 @@ public class JoueurPoker {
     private boolean etat;
     private int solde;
     private int misejoueur; //mise du joueur
+    private boolean joue;
     private int niveau;
     private boolean coucher;
 
@@ -32,7 +33,9 @@ public class JoueurPoker {
         this.solde = solde;
         etat = true;
         coucher = false;
+        joue = false;
     }
+
     public void setMise(int mise) {
         this.misejoueur = mise;
     }
@@ -382,5 +385,9 @@ public class JoueurPoker {
      */
     public void setSolde(int solde) {
         this.solde = solde;
+    }
+
+    public boolean getJoue() {
+        return joue;
     }
 }

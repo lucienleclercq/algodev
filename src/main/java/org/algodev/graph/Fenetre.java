@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import org.algodev.graph.Loto.LotoInterface;
+import org.algodev.graph.poker.MenuPoker;
 import org.algodev.graph.sudo.InterfaceSudo;
 
 import javafx.scene.control.Button;
@@ -28,19 +29,26 @@ public class Fenetre {
     private Group root;
     private Group loto;
     private Group sudo;
+    private Group poker;
     private Scene scene;
     private BackgroundImage Fond;
     private int tailleh;
     private int taillew;
     private int jeux; // 0 rien 1 loto 3 sudo
+    private static String os = System.getProperty("os.name").toLowerCase();
     public Fenetre(Stage s1) throws IOException {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();// recuperation de la taille de l'ecran de l'utilisateur
+        Toolkit tool = Toolkit.getDefaultToolkit();
+        Dimension dim = tool.getScreenSize();
+        tailleh = dim.height;
+        taillew = dim.width;
+        /*Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();// recuperation de la taille de l'ecran de l'utilisateur
         tailleh = (int)dimension.getHeight();
-        taillew  = (int)dimension.getWidth();
+        taillew  = (int)dimension.getWidth();*/
         root = new Group();//creation du groupe qui va garder tous les objet a afficher
         scene = new Scene(root,taillew, tailleh,  Color.grayRgb(50)); //instanciation de la fenetre
         loto = new Group(new LotoInterface(tailleh,taillew).getLoto());//groupe qui garder les objet du loto
         sudo = new Group(new InterfaceSudo(tailleh, taillew, scene).getSudo());//groupe qui garder les objet du sudoku
+        poker = new Group(new MenuPoker(tailleh, taillew, scene).getGpoker());
         this.s1 = s1;//on garde le stage dans une variable de la classe
         this.s1.setFullScreen(true);//on met le plein ecran
         this.s1.setScene(scene);
@@ -83,6 +91,9 @@ public class Fenetre {
                     {
                         root.getChildren().remove(sudo);
                     }
+                    if (jeux == 4) {
+                        root.getChildren().remove(poker);
+                    }
                     root.getChildren().add(loto);
                     jeux = 1;
                 }
@@ -117,10 +128,12 @@ public class Fenetre {
                     {
                         root.getChildren().remove(loto);
                     }
+                    if (jeux == 4) {
+                        root.getChildren().remove(poker);
+                    }
                     root.getChildren().add(sudo);
                     jeux = 3;
                 }
-
             }
         });
         Button bpoker = new Button();
@@ -133,7 +146,19 @@ public class Fenetre {
         bpoker.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
-                System.out.println("poker");
+                if(jeux != 4)
+                {
+                    if (jeux == 1)
+                    {
+                        root.getChildren().remove(loto);
+                    }
+                    if(jeux == 3) {
+                        root.getChildren().remove(sudo);
+                    }
+                    root.getChildren().add(poker);
+                    jeux = 4;
+                }
+
             }
         });
         root.getChildren().add(bpoker);

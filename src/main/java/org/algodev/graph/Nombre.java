@@ -1,6 +1,8 @@
 package org.algodev.graph;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -10,20 +12,23 @@ import javafx.scene.text.Text;
 
 public class Nombre {//cree un nombre dans un rectangle encadré
     private int n ;
-    private Group g;
+    private StackPane g;
     private Text t ;
     private Rectangle r;
     public Nombre(int n,int x, int y, int w,int r) {//n etant la valeur afficher dans le cadre
-        g = new Group();
+        g = new StackPane();
         this.n = n;
         this.t = new Text();//creation d'un texte pour afficher le nombre
-        t.setY(y+r*2);//positionnement du texte
-        t.setX(x+r);
+        /*t.setY(y+r*2);//positionnement du texte
+        t.setX(x+r);*/
+        StackPane.setAlignment(t, Pos.CENTER);
         t.setFont(new Font(20));//declaration de la taille du texte
-        t.setText(new Integer(n).toString());//declaration du texte a afficher
+        t.setText(Integer.toString(n));//declaration du texte a afficher
         this.r = new Rectangle(w,w,Color.web("0xC4C4C4", 1));
-        this.r.setY(y);
-        this.r.setX(x);
+        //this.r.setY(y);
+        //this.r.setX(x);
+        g.setTranslateX(x);
+        g.setTranslateY(y);
         this.r.setArcWidth(r);
         this.r.setArcHeight(r);
         this.r.setStrokeType(StrokeType.INSIDE);
@@ -41,7 +46,7 @@ public class Nombre {//cree un nombre dans un rectangle encadré
     {
         return  n ;
     }
-    public Group getG()
+    public StackPane getG()
     {
         return g;
     }

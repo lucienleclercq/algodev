@@ -5,15 +5,20 @@ import java.util.Collections;
 
 public class Table {
 
-    protected ArrayList<Carte> tapis;
-    protected ArrayList<JoueurPoker> joueurs;
-    protected ArrayList<Carte> paquet;
-    protected int pot;
+    private ArrayList<Carte> tapis;
+    private ArrayList<JoueurPoker> joueurs;
+    private ArrayList<Carte> paquet;
+    private int pot;
     private int misetable; //mise la plus haute de la partie
-    protected int joueursactifs; //reference du joueur qui doit jouer
+    private int joueursactifs; //reference du joueur qui doit jouer
+    private static int etatpartie;
+    private static int dealer;
+
 
     public Table(){
         pot = 0;
+        etatpartie = 0;
+        dealer = 0;
         tapis = new ArrayList<Carte>();
         joueurs = new ArrayList<JoueurPoker>();
         paquet = new ArrayList<Carte>();
@@ -28,7 +33,7 @@ public class Table {
         Carte carte;
         paquet.clear();
         while (i <= 13) {
-            //11: vallet, 12: dame, 13: roi;
+            //11: valet, 12: dame, 13: roi;
             carte = new Carte(i, "coeur");
             paquet.add(carte);
             carte = new Carte(i, "carreaux");
@@ -121,6 +126,7 @@ public class Table {
             Liste.add(Listejoueur.get(0));
             Listejoueur.remove(0);
         }
+        assert best != null;
         if (best.equals(joueurs.get(0))){
             Liste.add(Listejoueur.get(0));
             Listejoueur.remove(0);
@@ -166,7 +172,7 @@ public class Table {
             i++;
         }
         ajoutCarteTapis(5);
-        System.out.println("Le tapis :");
+        /*System.out.println("Le tapis :");
         aff(tapis);
         for (JoueurPoker j : joueurs) {
             System.out.println("Main joueur :");
@@ -178,7 +184,7 @@ public class Table {
         Listegagnant = listeGagnant();
         for (JoueurPoker j : Listegagnant) {
             aff(j.getBestCompo());
-        }
+        }*/
     }
     /*liste des joueurs qui se sont coucher*/
     public ArrayList<JoueurPoker> getCoucher()
@@ -226,5 +232,67 @@ public class Table {
         }
     }
 
+    public int getNbJoueurs() {
+        return joueurs.size();
+    }
 
+    public ArrayList<Carte> getTapis() {
+        return tapis;
+    }
+
+    public void gestionEtatPartie() {
+        if(tousCouche()) {
+            etatpartie = 0;
+            retirerJoueur();
+        }
+        else {
+            if(etatpartie == 4) {
+                etatpartie = 0;
+                if(dealer >= joueurs.size()) {
+                    dealer = 0;
+                }
+                else {
+                    if(joueurs.get(dealer).getSolde() > 0) {
+                        dealer++;
+                    }
+                }
+                retirerJoueur();
+            }
+            else {
+                if(tousJoue()) {
+                    etatpartie++;
+                }
+            }
+        }
+    }
+
+    public boolean tousCouche() {
+        for(JoueurPoker joueur : joueurs) {
+            if(!joueur.getCoucher()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean tousJoue() {
+        for(JoueurPoker joueur : joueurs) {
+            if(!joueur.getJoue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void retirerJoueur() {
+        for(JoueurPoker joueur : joueurs) {
+            if(joueur.getSolde() == 0) {
+                joueurs.remove(joueur);
+            }
+        }
+    }
+
+    public static int getEtatpartie() {
+        return etatpartie;
+    }
 }

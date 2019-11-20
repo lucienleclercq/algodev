@@ -18,7 +18,6 @@ public class Sudoku extends Grille {
     public Sudoku () throws IOException {
     	super(9,9, "Sudoku");
     	this.random = (int) (Math.random() * 300) +1;
-    	System.out.println(random);
     	String url = "/grilles-et-solutions/Grilles-faciles.txt";
         InputStream input = this.getClass().getResourceAsStream(url);                       // Indispensable, permet d'aller chercher le fichier dans le jar, besoin d'ajouter l'arbo dans le classpath
         BufferedReader br = new BufferedReader(new InputStreamReader(input));               // Initialise un buffer et un InputStreamReader

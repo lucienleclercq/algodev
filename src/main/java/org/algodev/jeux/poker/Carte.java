@@ -45,5 +45,11 @@ public class Carte implements Comparable<Carte> {
             return -1;
         return 0;
     }
+
+    public String getCarte() {
+        String hauteur = Integer.toString(valeur);
+        StringBuilder strb = new StringBuilder(hauteur + " " + couleur + ".jpg");
+        return strb.toString();
+    }
 }
 
