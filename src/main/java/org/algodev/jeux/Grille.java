@@ -1,5 +1,6 @@
 package org.algodev.jeux;
 
+import org.algodev.jeux.batailleNavale.CaseNavale;
 import org.algodev.jeux.loto.CaseLoto;
 import org.algodev.jeux.sudoku.CaseSudoku;
 
@@ -47,16 +48,24 @@ public class Grille {
                 }
             }
         }
-        else {
-            if (jeu.equals("Loto")) {
+        else if (jeu.equals("Loto")) {
                 for(int i = 0; i < ligne; i++) {
                     this.grille.add(new ArrayList<Case>());
                     for (int j = 0; j < col; j++) {
                         this.grille.get(i).add(new CaseLoto());
                     }
                 }
+        }
+        else if(jeu.equals("Bataille Navale"))
+        {
+            for(int i = 0; i < ligne; i++) {
+                this.grille.add(new ArrayList<Case>());
+                for (int j = 0; j < col; j++) {
+                    this.grille.get(i).add(new CaseNavale());
+                }
             }
         }
+
     }
     public void agrandir(int ligne, int col)
     {

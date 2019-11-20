@@ -47,6 +47,7 @@ public class Navale extends Grille {
      * Permet de gérer une attack reçu
      */
     public boolean attack(int x,int y){
+
         CaseNavale caseNavale = (CaseNavale) this.getCase(x-1,y-1);
         caseNavale.setEtat();
         int i = bateauPresent(this.getCase(x-1, y-1));
@@ -108,6 +109,7 @@ public class Navale extends Grille {
         int i = 0;
         if (x < 1 || x > 10|| y < 1 ||y > 10)
             return false;
+
         if(oriantation.equals("Gauche")){
             if (y-1-taille < 0)
                 return false;
@@ -118,7 +120,7 @@ public class Navale extends Grille {
             }
         }
         else if(oriantation.equals("Droite")){
-            if (y-1+taille > grille.size())
+            if (y-1+taille >= grille.size())
                 return false;
             while (i <= taille){
                 if(grille.get(x-1).get(y-1+i).toString().equals("Bateau"))
@@ -136,8 +138,10 @@ public class Navale extends Grille {
             }
         }
         else if(oriantation.equals("Bas")){
-            if (x-1+taille > grille.size())
-                return false;
+            if (x-1+taille >= grille.size()){
+                System.out.println(grille.size()+"q");return false;
+            }
+
             while (i <= taille){
                 if(grille.get(x-1+i).get(y-1).toString().equals("Bateau"))
                     return false;
