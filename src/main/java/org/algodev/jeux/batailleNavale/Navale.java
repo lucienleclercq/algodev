@@ -47,15 +47,14 @@ public class Navale extends Grille {
      * Permet de gérer une attack reçu
      */
     public boolean attack(int x,int y){
-
         CaseNavale caseNavale = (CaseNavale) this.getCase(x-1,y-1);
         caseNavale.setEtat();
         int i = bateauPresent(this.getCase(x-1, y-1));
         if (i != -1) {
             this.getCase(x - 1, y - 1).setValeur("toucher");
+
             ListeBateau.get(i).remove(this.getCase(x-1, y-1));
             if(ListeBateau.get(i).isEmpty()) {
-                System.out.println("Couler");
                 ListeBateau.remove(i);
             }
             return true;
@@ -107,42 +106,43 @@ public class Navale extends Grille {
      */
     public boolean verifPlacement(int x, int y, int taille, String oriantation){
         int i = 0;
+        System.out.println("x"+x+"y"+y);
         if (x < 1 || x > 10|| y < 1 ||y > 10)
             return false;
 
         if(oriantation.equals("Gauche")){
-            if (y-1-taille < 0)
+            if (y-taille < 0)
                 return false;
-            while (i <= taille){
+            while (i < taille){
                 if (grille.get(x-1).get(y-1-i).toString().equals("Bateau"))
                     return false;
                 i++;
             }
         }
         else if(oriantation.equals("Droite")){
-            if (y-1+taille >= grille.size())
+            if (y-1+taille > grille.size())
                 return false;
-            while (i <= taille){
+            while (i < taille){
                 if(grille.get(x-1).get(y-1+i).toString().equals("Bateau"))
                     return false;
                 i++;
             }
         }
         else if(oriantation.equals("Haut")){
-            if (x-1-taille < 0)
+            if (x-taille < 0)
                 return false;
-            while (i <= taille){
+            while (i <taille){
                 if(grille.get(x-1-i).get(y-1).toString().equals("Bateau"))
                     return false;
                 i++;
             }
         }
         else if(oriantation.equals("Bas")){
-            if (x-1+taille >= grille.size()){
-                System.out.println(grille.size()+"q");return false;
+            if (x-1+taille > grille.size()){
+                return false ;
             }
 
-            while (i <= taille){
+            while (i < taille){
                 if(grille.get(x-1+i).get(y-1).toString().equals("Bateau"))
                     return false;
                 i++;
