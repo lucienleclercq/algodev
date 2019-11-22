@@ -90,6 +90,7 @@ public class InterfaceBatailleNaval {
             boolean trouver = false;
             while (!trouver)
             {
+
                 int x = (int)(Math.random()*(10-1));
                 int y = (int)(Math.random()*(10-1));
                 int o = (int)(Math.random()*(4-1)) * 90;

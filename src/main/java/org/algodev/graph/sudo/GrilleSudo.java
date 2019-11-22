@@ -41,8 +41,8 @@ public class GrilleSudo {
                 int n = Integer.parseInt(traitementsudoku.getCase(i, j).getValeur());
                 nb = new Nombre(n ,(x+w*j+e*j)+4*e* (j/3),(y+w*i+e*i)+4*e* (i/3),w,r);                              //Remplit le tableau avec les valeurs de la grille
                 nb.setText(Integer.toString(n));
-                nb.getText().setY(((y+w*i+e*i)+4*e* (i/3))+ (r*6));                                                       //positionnement du texte
-                nb.getText().setX(((x+w*j+e*j)+4*e*(j/3))+(r*3));
+                //nb.getText().setY(((y+w*i+e*i)+4*e* (i/3))+ (r*6));                                                       //positionnement du texte
+                //nb.getText().setX(((x+w*j+e*j)+4*e*(j/3))+(r*3));
                 nb.getText().setFont(new Font(50));                                                                  //declaration de la taille du texte
                 CaseSudoku casesudo = (CaseSudoku) traitementsudoku.getCase(i, j);
                 if(casesudo.getModifiable()) {                                                                            //Si la case est modifiable, on creer un AffichageCaseSudoku qui la rendra cliquable et modifiable

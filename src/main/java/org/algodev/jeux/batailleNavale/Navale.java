@@ -106,7 +106,6 @@ public class Navale extends Grille {
      */
     public boolean verifPlacement(int x, int y, int taille, String oriantation){
         int i = 0;
-        System.out.println("x"+x+"y"+y);
         if (x < 1 || x > 10|| y < 1 ||y > 10)
             return false;
 

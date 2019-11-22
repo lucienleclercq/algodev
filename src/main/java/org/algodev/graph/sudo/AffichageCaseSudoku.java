@@ -27,15 +27,11 @@ public class AffichageCaseSudoku {
             public void handle(MouseEvent mouseEvent) {
                 if(!getSelectionnee() && !grille.caseDejaSelectionnee()) {                                              //Si la case n'est pas selectionnee ET qu'aucune autre case ne l'est
                     setSelectionnee(true);                                                                              //Selectionne passe true
-                    g.getChildren().remove(nombre.getRectangle());                                                      //On retire le rectangle pr l'enlever du group (affichage)
                     nombre.setCouleur(Color.web("#505C5E", 1));                                      //Change la couleur de la case
-                    g.getChildren().add(nombre.getRectangle());                                                         //Re-affiche la case
                 }
                 else {
                     setSelectionnee(false);                                                                             //Sinon, passe false
-                    g.getChildren().remove(nombre.getRectangle());                                                      //Retire de l'affichage
                     nombre.setCouleur(Color.web("0xC4C4C4", 1));                                     //Remet la couleur d'origine
-                    g.getChildren().add(nombre.getRectangle());                                                         //Re-affiche la case
                 }
             }
         });

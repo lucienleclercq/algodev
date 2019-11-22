@@ -20,6 +20,4 @@ public class Main extends Application {
         s1.setTitle("jeux");
         f1 = new Fenetre(s1);
     }
-
-
 }
