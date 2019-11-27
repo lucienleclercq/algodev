@@ -1,5 +1,9 @@
 package main.java.org.algodev.jeux.poker;
 
+/**
+ * Enum d'un hauteur, chaque hauteur a une valeur de 14 a 2. Plus cette valeur est elevee, plus la carte est forte.
+ */
+
 public enum Hauteur {
     As(14),
     Roi(13),

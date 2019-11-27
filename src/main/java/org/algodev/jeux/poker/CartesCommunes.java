@@ -5,11 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CartesCommunes {
-    private List<Carte> listecartescommunes;
+    private List<Carte> listecartescommunes;        //Liste des cartes communes a tous les joueurs.
 
-    public CartesCommunes(Carte...cartes) {
+    public CartesCommunes() {
         this.listecartescommunes = new ArrayList<>();
-        this.listecartescommunes.addAll(Arrays.asList(cartes));
+    }
+
+    public void ajouterCarteCommune(Carte carte) {
+        this.listecartescommunes.add(carte);
     }
 
     public List<Carte> getListecartescommunes() {
