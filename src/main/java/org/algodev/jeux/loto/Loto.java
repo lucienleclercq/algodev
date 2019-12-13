@@ -2,17 +2,23 @@ package org.algodev.jeux.loto;
 
 import org.algodev.jeux.Case;
 import org.algodev.jeux.Grille;
+import org.algodev.jeux.poker.InterfaceMain;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Loto
 {
     protected int nbgrille; //indique le nombre de grille cas le joueur
-    protected ArrayList<Integer> numtirer; //liste de tous les numéros qui sont tirer
+    protected static ArrayList<Integer> numtirer; //liste de tous les numéros qui sont tirer
     protected Grille grille; //liste de toute les grilles
-
+    protected static int etatpartie;
+    protected static boolean fin;
     public Loto()
     {
+        fin = false;
+        etatpartie = 1;
         nbgrille = 0;
         numtirer = new ArrayList<Integer>();
         grille = new Grille(3,9,"Loto");
@@ -31,6 +37,7 @@ public class Loto
                 if(cast.jetons)cast.jetons = false;
             }
         }
+        restartetatpartie();
     }
     public void CreerCarton()
     {// 5 par ligne
@@ -117,9 +124,9 @@ public class Loto
     }
     public boolean VerifLigne(int nb)
     {
+
         boolean valider = true , fin = false;
         int nbligne = 0;
-
         CaseLoto c;
         for(int k = 0; k < nbgrille; k++)
         {
@@ -130,8 +137,9 @@ public class Loto
                 for(int j = 0 ; j < 9 ; j ++)
                 {
                     c = (CaseLoto)grille.getGrille().get(i+(3*k)).get(j);
-                    if((!c.getjeton()|| !c.gettirer()) && !c.getnum().equals("vide"))
+                    if((!c.getjeton()|| !tirer(Integer.valueOf(c.getnum()))) && !c.getnum().equals("vide"))
                     {
+                        System.out.println(valider);
                         valider = false;
                     }
                 }
@@ -218,5 +226,30 @@ public class Loto
             System.out.println(toString());
         }
     }
+    public void ajoutEtatpartie()
+    {
+     if(etatpartie <3)etatpartie ++;
+     else fin = true;
+    }
+    public void restartetatpartie()
+    {
+        etatpartie = 1;
+        fin = false;
+    }
 
+    public int getEtatpartie() {
+        return etatpartie;
+    }
+    public boolean tirer(int nb)
+    {
+        for(int i : numtirer)
+        {
+            if(i == nb)return true;
+        }
+        return false;
+    }
+    public boolean getfin()
+    {
+        return fin;
+    }
 }

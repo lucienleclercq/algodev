@@ -129,16 +129,7 @@ public class InterfaceBatailleNaval {
             }
         });
         glob.getChildren().add(recommencer);
-
-        Image image = new Image(String.valueOf(this.getClass().getResource("/eaux.jpg")));//recuperation de l'image
-        Rectangle r = new Rectangle(w * 0.78, h * 0.62);
-        r.setFill(new ImagePattern(image));
-        r.setArcWidth(10);
-        r.setArcHeight(10);
-        r.setX(w * 0.14);//positionnement de l'image
-        r.setY(h * 0.15);
-        glob.getChildren().add(r);
-        r = new Rectangle(w * 0.361, h * 0.599);
+       Rectangle r = new Rectangle(w * 0.361, h * 0.599);
         r.setLayoutX(w * 0.15);
         r.setLayoutY(h * 0.16);
         r.setArcWidth(10);
@@ -258,7 +249,7 @@ public class InterfaceBatailleNaval {
 
                                         if (traitementj2.findePartie()) {
                                             Image image = new Image(String.valueOf(this.getClass().getResource("/BatailleNavale/gagner.png")));
-                                            Rectangle fin = new Rectangle(w * 0.1, w * 0.1);
+                                            Rectangle fin = new Rectangle(w * 0.361, h * 0.599);
                                             fin.setFill(new ImagePattern(image));
                                             fin.setX((int) (w * 0.15));
                                             fin.setY((int) (w * 0.1));
@@ -279,7 +270,7 @@ public class InterfaceBatailleNaval {
                                         afficherAttaque(tirery, tirerx, false);
                                         if (traitementj1.findePartie()) {
                                             Image image = new Image(String.valueOf(this.getClass().getResource("/BatailleNavale/gagner.png")));
-                                            Rectangle fin = new Rectangle(w * 0.1, w * 0.1);
+                                            Rectangle fin = new Rectangle(w * 0.361, h * 0.599);
                                             fin.setFill(new ImagePattern(image));
                                             fin.setX((int) (w * 0.55));
                                             fin.setY((int) (w * 0.1));

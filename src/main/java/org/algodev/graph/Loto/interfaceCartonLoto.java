@@ -28,7 +28,7 @@ public class interfaceCartonLoto {// cree un carton
         this.h =75;//taille du carton en hauteur
         this.w = 75;//en largeur
         this.e = 10;//ecart entre les case
-        this.x = 400;//position en x;
+        this.x = 100;//position en x;
         this.y = 200;//position en y
         this.r = 30;//arondisement des coin
         this.k = 0;
@@ -40,11 +40,11 @@ public class interfaceCartonLoto {// cree un carton
         carton.setOnScroll(new EventHandler<ScrollEvent>() {//permet de scroller quand les carton depasse l'écran
             @Override
             public void handle(ScrollEvent event) {
-                if(k> 3)
+                if(k> 2)
                 {
+                    System.out.println(carton.getTranslateY() +" "+ -(fondglob.getHeight()+h*3));
                     if(carton.getTranslateY() + event.getDeltaY() > 0)carton.setTranslateY(0);
-                    else if((carton.getTranslateY() + event.getDeltaY()) < -((h*3+e*6)*(k-3)+e*k)) carton.setTranslateY(-((h*3+e*6)*(k-3)+e*k));
-                    else carton.setTranslateY(carton.getTranslateY() + event.getDeltaY());
+                    else if((carton.getTranslateY()+ event.getDeltaY() > -(fondglob.getHeight()-h*3-e*8)))carton.setTranslateY(carton.getTranslateY() + event.getDeltaY());
 
                 }
             }
