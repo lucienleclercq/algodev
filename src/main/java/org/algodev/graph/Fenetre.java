@@ -8,18 +8,20 @@ import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import org.algodev.graph.Loto.LotoInterface;
 import org.algodev.graph.batailleNavale.InterfaceBatailleNaval;
+import org.algodev.graph.poker.AffichagePoker;
 import org.algodev.graph.sudo.InterfaceSudo;
 
 import javafx.scene.control.Button;
 
-import java.awt.*;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -34,40 +36,56 @@ public class Fenetre {
     private BackgroundImage Fond;
     private int tailleh;
     private int taillew;
+    private Rectangle barreMenu;
     private int jeux; // 0 rien 1 loto 2 bataille 3 sudo
+    private static String os = System.getProperty("os.name").toLowerCase();
     public Fenetre(Stage s1) throws IOException {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();// recuperation de la taille de l'ecran de l'utilisateur
-        tailleh = (int)dimension.getHeight();
-        taillew  = (int)dimension.getWidth();
+
+        tailleh = 1080;
+        taillew = 1920;
         root = new Group();//creation du groupe qui va garder tous les objet a afficher
         scene = new Scene(root,taillew, tailleh,  Color.grayRgb(50)); //instanciation de la fenetre
         loto = new Group(new LotoInterface(tailleh,taillew).getLoto());//groupe qui garder les objet du loto
         sudo = new Group(new InterfaceSudo(tailleh, taillew, scene).getSudo());//groupe qui garder les objet du sudoku
+
         bataille = new Group(new InterfaceBatailleNaval(tailleh,taillew).getG());
         this.s1 = s1;//on garde le stage dans une variable de la classe
-        this.s1.setFullScreen(true);//on met le plein ecran
+        //this.s1.setWidth(250);
+        //this.s1.setHeight(210);
         this.s1.setScene(scene);
         this.s1.show();//on montre la fenetre
         jeux = 0;//represente le jeut en cour
         creeMenu();
     }
     private void creeMenu() throws FileNotFoundException {
-
-        //FileInputStream inputstream = new FileInputStream(".\\src\\graph\\IMG_0114.jpg");
-        //Image image = new Image(String.valueOf(this.getClass().getResource("/IMG_0114.jpg")));//recuperation de l'image
-        //ImageView im = new ImageView(image);//enregistrement de l'image
-        //im.setX(0);//positionnement de l'image
-        //im.setY(0);
-        //im.setPreserveRatio(false);
-        //im.setFitHeight(tailleh);//definition de la taille de l'image
-        //im.setFitWidth(taillew);
-        //root.getChildren().add(im);//on affiche l'image en la mettant dans le groupe
-        Rectangle barreMenu = new Rectangle(taillew*0.076,tailleh);//on cree un rectangle pour faire le fond de menu a gauche
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if( keyEvent.getCode() == KeyCode.ESCAPE){
+                    barreMenu.setFill(Color.web("#959595", 0.0));
+                    root.setTranslateX(40);
+                    root.setTranslateY(20);
+                }
+            }
+        });
+        root.setTranslateX(40);
+        root.setTranslateY(20);
+        Image image = new Image(String.valueOf(this.getClass().getResource("/ship.jpg")));//recuperation de l'image
+        ImageView im = new ImageView(image);//enregistrement de l'image
+        im.setX(0);//positionnement de l'image
+        im.setY(0);
+        im.setPreserveRatio(false);
+        im.setFitHeight(tailleh+20);//definition de la taille de l'image
+        im.setFitWidth(taillew+40);
+        im.setTranslateX(-40);
+        im.setTranslateY(-20);
+        root.getChildren().add(im);//on affiche l'image en la mettant dans le groupe
+         barreMenu = new Rectangle(taillew*0.076,tailleh);//on cree un rectangle pour faire le fond de menu a gauche
         DropShadow o = new DropShadow();//creation d'une ombre pour barreMenu
         o.setOffsetX(taillew*0.005);//declaration du decalage de l'ombre
         o.setOffsetY(taillew*0.005);
         barreMenu.setEffect(o);// on associe l'ombre a barreMenu
-        barreMenu.setFill(Color.web("#959595", 0.6));//on donne une couleur au rectangle
+        barreMenu.setFill(Color.web("#959595", 0.0));//on donne une couleur au rectangle
         root.getChildren().add(barreMenu);// on affiche le rectangle en le metant dans root
         Button bloto = new Button();//creation d'un bouton
         bloto.setLayoutX(10);//positionnement du bouton
@@ -79,17 +97,21 @@ public class Fenetre {
         bloto.setOnAction(new EventHandler<ActionEvent>() {// declaration d'un event pour interagir avec le bouton
 
             public void handle(ActionEvent event) {
+
                 System.out.println("loto");
                 if(jeux != 1)
-                {
+                {im.setImage(new Image(String.valueOf(this.getClass().getResource("/loto.jpg"))));
                     if (jeux == 3)
                     {
                         root.getChildren().remove(sudo);
                     }
+
                     else if(jeux == 2)root.getChildren().remove(bataille);
+
                     root.getChildren().add(loto);
                     jeux = 1;
                 }
+                interjeux();
             }
         });
         Button bbataile = new Button();
@@ -102,18 +124,19 @@ public class Fenetre {
         bbataile.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
+
                 System.out.println("bataille navale");
                 if(jeux != 2)
-                {
+                {im.setImage(new Image(String.valueOf(this.getClass().getResource("/ship.jpg"))));
                     if (jeux == 1)
                     {
                         root.getChildren().remove(loto);
                     }
                     else if(jeux == 3)root.getChildren().remove(sudo);
-
                     root.getChildren().add(bataille);
                     jeux = 2;
                 }
+                interjeux();
 
             }
         });
@@ -127,18 +150,19 @@ public class Fenetre {
         bsudoku.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
+
                 if(jeux != 3)
-                {
+                {im.setImage(new Image(String.valueOf(this.getClass().getResource("/winter.jpg"))));
                     if (jeux == 1)
                     {
                         root.getChildren().remove(loto);
                     }
+
                     else if(jeux == 2)root.getChildren().remove(bataille);
 
                     root.getChildren().add(sudo);
                     jeux = 3;
-                }
-
+                }interjeux();
             }
         });
         Button bpoker = new Button();
@@ -151,14 +175,50 @@ public class Fenetre {
         bpoker.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
-                System.out.println("poker");
+
+                if(jeux != 4)
+                {im.setImage(new Image(String.valueOf(this.getClass().getResource("/poker.jpg"))));
+                    if (jeux == 1)
+                    {
+                        root.getChildren().remove(loto);
+                    }
+                    else if(jeux == 2)
+                    {
+                        root.getChildren().remove(bataille);
+                    }
+                    else if(jeux == 3) {
+                        root.getChildren().remove(sudo);
+                    }
+                    AffichagePoker affichagePoker = new AffichagePoker(s1);
+                    s1.hide();
+                    jeux = 4;
+                }interjeux();
+
             }
         });
+        Button credit = new Button();
+        credit.setLayoutX(10);
+        credit.setLayoutY(975);
+        credit.setText("Credits");
+        credit.setOnMouseClicked(mouseEvent -> {
+            Credits credits = new Credits(s1);
+            s1.hide();
+        });
+        root.getChildren().add(credit);
         root.getChildren().add(bpoker);
         root.getChildren().add(bsudoku);
         root.getChildren().add(bbataile);
         root.getChildren().add(bloto);
-
-
+    }
+    private void interjeux()
+    {
+        if(!s1.isFullScreen())
+        {
+            barreMenu.setFill(Color.web("#959595", 0.6));
+            root.setTranslateX(0);
+            root.setTranslateY(0);
+            s1.setHeight(1080);
+            s1.setWidth(1920);
+        }
     }
 }

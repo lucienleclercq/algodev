@@ -9,71 +9,27 @@ import java.util.ArrayList;
 
 public class Sudoku extends Grille {
     private int random;
+    private String difficulte;
 
     /**
      * Constructeur, lit la grille dans un fichier texte et appelle methode dans la classe mere pour remplir la grille
      * @throws FileNotFoundException
      */
 
-    public Sudoku () throws IOException {
+    public Sudoku (String difficulte) throws IOException {
     	super(9,9, "Sudoku");
     	this.random = (int) (Math.random() * 300) +1;
-    	System.out.println(random);
-    	String url = "/grilles-et-solutions/Grilles-faciles.txt";
+    	this.difficulte = difficulte;
+    	String url = "/grilles-et-solutions/Grilles-";
+    	url = url + difficulte + ".txt";                                                    // Reconstruit le string pour aller chercher le fichier correspondant à la difficulté choisie.
         InputStream input = this.getClass().getResourceAsStream(url);                       // Indispensable, permet d'aller chercher le fichier dans le jar, besoin d'ajouter l'arbo dans le classpath
         BufferedReader br = new BufferedReader(new InputStreamReader(input));               // Initialise un buffer et un InputStreamReader
-        for(int i = 1; i < random; i++) {
+        for(int i = 1; i < random; i++) {                                                   // Boucle jusque la valeur random.
             br.readLine();                                                                  // Lit la ligne
         }
         String valeurs = br.readLine();
         super.remplirGrille(valeurs);
         input.close();
-    }
-    
-    /**
-     * Demande un entier a entrer dans la grille a l'utilisateur
-     * @return la valeur entree
-     */
-    
-    public Integer entrerValeur() {
-    	Scanner scanner = new Scanner(System.in);
-    	int valeur;
-        do {
-        	System.out.println("ENTRER UN ENTIER ENTRE 1 ET 9 : ");
-        	valeur = scanner.nextInt();
-        } while(valeur < 0 && valeur > 10);
-        return valeur;
-    }
-    
-    public Boolean verifModifiable(Case cases) {
-    	CaseSudoku casesudoku = (CaseSudoku) cases;
-    	return casesudoku.getModifiable();
-    }
-
-    // TODO: 05/10/2019
-    public void modifierValeur() {
-    	ArrayList<Integer> listecoordonnees = new ArrayList<Integer>();
-    	String valeur;
-        do {
-        	listecoordonnees = coordonneesUtilisateur();
-        } while (!(coordonneesCorrectes(listecoordonnees)) || !(verifModifiable(this.getCase(listecoordonnees.get(1), listecoordonnees.get(0)))));
-        valeur = entrerValeur().toString();
-        this.getCase(listecoordonnees.get(1), listecoordonnees.get(0)).setValeur(valeur);
-    }
-
-    /**
-     * Methode a� appeler pour verifier si tous les champs de la grille sont remplis
-     * @return true si remplie, false si un champ est toujours a� 0
-     */
-    public Boolean grilleRemplie() {
-        for(ArrayList<Case> liste : this.grille) {
-            for(Case cases : liste) {
-                if (cases.toString().equals("0")) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     /**
@@ -83,14 +39,14 @@ public class Sudoku extends Grille {
      */
 
     public String chargerSolution() throws IOException {
-        String url = "/grilles-et-solutions/Solutions-faciles.txt";
+        String url = "/grilles-et-solutions/Solutions-";
+        url = url + difficulte + ".txt";
         InputStream input = this.getClass().getResourceAsStream(url);
         BufferedReader br = new BufferedReader(new InputStreamReader(input));
         for(int i = 1; i < this.random; i++) {
             br.readLine();
         }
-        String valeurs = br.readLine();
-        return valeurs;
+        return br.readLine();
     }
 
     /**
@@ -111,30 +67,6 @@ public class Sudoku extends Grille {
             return true;
         }
         else return false;
-    }
-
-    /**
-     * Methode pour afficher la grille du Sudoku sur la console
-     */
-
-    public void affichageGrille() {
-        int i = 0, j = 0;
-        for (ArrayList<Case> cases : grille) {
-            System.out.print("| ");
-            for (Case valeur : cases) {
-                System.out.print(valeur.toString() + " | ");
-                j++;
-                if(j%3 == 0 && j < 9) {
-                    System.out.print(" | ");
-                }
-            }
-            j = 0;
-            i++;
-            System.out.println();
-            if (i%3 == 0 && i < 9) {
-                System.out.println();
-            }
-        }
     }
 
     /**
@@ -321,25 +253,5 @@ public class Sudoku extends Grille {
             }
         }
         return false;
-    }
-
-    /**
-     * Methode a appeler pour lancer une partie de Sudoku en mode console
-     * @throws FileNotFoundException
-     */
-
-    public void partie() throws IOException {
-        affichageGrille();
-        String solution = chargerSolution();
-        do {
-            modifierValeur();
-            if(grilleRemplie()) {
-                if(finDePartie(solution)) {
-                    break;
-                }
-            }
-            affichageGrille();
-        } while(true);
-        System.out.println("Bravo");
     }
 }

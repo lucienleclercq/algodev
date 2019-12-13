@@ -52,6 +52,15 @@ public class EtatPartie {//pas fini permet d'afficher combien de ligne il faut p
         g.getChildren().add(r);
         g.getChildren().add(t);
     }
+    public void fin()
+    {
+        t.setText("la partie est terminer");
+    }
+    public void setEtatpartie(int nb)
+    {
+        etatpartie = nb;
+        sett();
+    }
     private void sett()
     {
         t.setText("vous jouer pour "+ new Integer(etatpartie).toString() + " ligne");

@@ -1,6 +1,6 @@
 package org.algodev.graph;
 
-import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -10,27 +10,27 @@ import javafx.scene.text.Text;
 
 public class Nombre {//cree un nombre dans un rectangle encadré
     private int n ;
-    private Group g;
+    private StackPane stackPane;
     private Text t ;
     private Rectangle r;
-    public Nombre(int n,int x, int y, int w,int r) {//n etant la valeur afficher dans le cadre
-        g = new Group();
+    public Nombre(int n,int x, int y, int w,int r,int tailleTexte) {//n etant la valeur afficher dans le cadre
+        stackPane = new StackPane();
         this.n = n;
         this.t = new Text();//creation d'un texte pour afficher le nombre
-        t.setY(y+r*2);//positionnement du texte
-        t.setX(x+r);
-        t.setFont(new Font(20));//declaration de la taille du texte
-        t.setText(new Integer(n).toString());//declaration du texte a afficher
+        t.setFont(new Font(tailleTexte));//declaration de la taille du texte
+        t.setText(Integer.toString(n));//declaration du texte a afficher
         this.r = new Rectangle(w,w,Color.web("0xC4C4C4", 1));
         this.r.setY(y);
         this.r.setX(x);
+        this.stackPane.setTranslateX(x);
+        this.stackPane.setTranslateY(y);
         this.r.setArcWidth(r);
         this.r.setArcHeight(r);
         this.r.setStrokeType(StrokeType.INSIDE);
         this.r.setStrokeWidth(4);
         this.r.setStroke(Color.web("0x303030", 0.7));
-        g.getChildren().add(this.r);
-        g.getChildren().add(t);
+        stackPane.getChildren().add(this.r);
+        stackPane.getChildren().add(t);
 
     }
     public void setCouleur(Paint g)
@@ -41,9 +41,9 @@ public class Nombre {//cree un nombre dans un rectangle encadré
     {
         return  n ;
     }
-    public Group getG()
+    public StackPane getStackPane()
     {
-        return g;
+        return stackPane;
     }
 
     public Text getText() {

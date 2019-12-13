@@ -3,8 +3,6 @@ import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import org.algodev.graph.Nombre;
 import org.algodev.jeux.loto.Loto;
 
@@ -14,7 +12,7 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
     private Group g;
     private ArrayList<Nombre> nombre;
     private Afficheur a;
-    private Text valider;
+
     private int x;
     private int y;
     private int w;
@@ -23,8 +21,7 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
     private Loto traitement;
     public Compteur(int x, int y, int w , int r, int e , Loto traitement) {//x et y la position w et r la taille e l'ecare entre les case
         g = new Group();
-        valider = new Text();
-        g.getChildren().add(valider);
+
 
         this.traitement = traitement;
         nombre = new ArrayList<Nombre>();
@@ -34,7 +31,7 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
         this.r = r;
         this.e = e;
 
-        valider.setFill(Color.RED);
+
         creecompteur();
     }
     private void creecompteur()//cree le tablaux de valeur
@@ -55,9 +52,9 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
         {
             for(int j = 1; j < 11; j ++)
             {
-                nb = new Nombre(j+i*10,(x+w*j+e*j),(y+w*i+e*i),w,r);
+                nb = new Nombre(j+i*10,(x+w*j+e*j),(y+w*i+e*i),w,r, 20);
                 nombre.add(nb);
-                g.getChildren().add(nb.getG());
+                g.getChildren().add(nb.getStackPane());
             }
         }
 
@@ -68,36 +65,15 @@ public class Compteur {//afficher un tableaux de toute les valeur possible et af
         {
             n.setCouleur(Color.web("0xC4C4C4", 1));
         }
-        vide();
+
     }
     public void maj(int nb)//permet de changer l'état d'un nombre
     {
         if(nb>0)nombre.get(nb-1).setCouleur(Color.web("0xFF2020", 1));
         a.setnombre(nb);
     }
-    public boolean gagner(int nb)//affiche gagner
-    {
-        if(traitement.VerifLigne(nb))
-        {
-            valider.setFont(new Font(100));
-            valider.setX(x+70);
-            valider.setY(y+9*w+9*e+100);
-            valider.setText("!!GAGNER!!");
-            return true;
-        }
-        else {
-            valider.setX(x+225);
-            valider.setY(y+9*w+9*e+250);
-            valider.setFont(new Font(300));
-            valider.setText("X");
-            return false;
-        }
 
-    }
-    public void vide()
-    {
-        valider.setText("");
-    }
+
     public Group getG()
     {
         return g;
